@@ -1,2 +1,2 @@
-# Photo-App-Post
-Photo App Post | Vue.js
+# Intro to Vue.js 
+Photo App Post 
