@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang=en>
+    <head>
+        <title>Photo App Comment | Vue.js</title>
+        <link rel='stylesheet' href='assets/css/comment.css'>
+        <script src='https://unpkg.com/vue'></script>
+    </head>
+    <body>
+        <div id='app'>
+            <img src='assets/img/hannibal.png' class='main-photo'>
+            <img src='assets/img/hannibal2.png' class='main-profile'>
+            <div class='main-info'>
+                <span class='name'>Hannibal Lechter</span>
+                <h3>"I love Cheetos"</h3>
+            </div>
+            <hr>
+            <ul>
+                <li
+                    is='individual-comment'
+                    v-for='comment in comments'
+                    v-bind:commentpost='comment'>
+                </li>
+            </ul>
+            
+            <input
+                   v-model='newComment'
+                   v-on:keyup.enter='addComment'
+                   placeholder="Add a comment">
+        </div>
+    </body>
+    
+    <!--This is the Individual Comment Component-->
+<script type="text/x-template" id="comment-template">
+<li> 
+    <img class="post-img" :src="commentpost.authorImg" /> 
+    <small>{{ commentpost.author }}</small>
+    <p class="post-comment">"{{ commentpost.text }}"</p>
+</li>
+</script>
+    <script>
+    Vue.component('individual-comment', {
+        template: '#comment-template',
+        props: ['commentpost']
+    });
+    new Vue({
+        el: '#app', 
+        data:{
+            newComment: '', 
+            comments:[
+                {
+                    text: 'Looks great Hannibal!',
+                    author: 'Petey',
+                    authorImg: 'assets/img/petey_sm3.png'
+                }, 
+                {
+                    text: 'I love Cheetos too',
+                    author: 'Bobby',
+                    authorImg: 'assets/img/bob_sm.png'
+                },
+                {
+                    text: 'Those are my cheetos',
+                    author: 'Fraggle',
+                    authorImg: 'assets/img/fraggle_sm.png'
+                }
+            ]
+        }, 
+        methods:{
+            addComment: function(){
+                const newCommentObj={
+                    text: this.newComment, 
+                    author: 'Magoo',
+                    authorImg: 'https://s3-us-west-2.amazonaws.com/s.cdpn.io/28963/v-skull.jpg'
+                };
+                this.comments.push(newCommentObj); 
+                this.newComment =''
+            }
+        }
+    });
+    </script>
+</html>
